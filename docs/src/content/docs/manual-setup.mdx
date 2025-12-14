@@ -1,134 +1,123 @@
----
-title: Manual Setup
-description: Learn how to configure Starlight manually to add it to an existing Astro project.
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVH TRAVELS | Cab & Tour Services</title>
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+<style>
+body {margin:0;font-family:Arial,sans-serif;background:#f4f6f8;}
+header {
+background:linear-gradient(to right,#0b5ed7,#084298);
+color:white;padding:30px 15px;text-align:center;
+}
+header img {height:70px;margin-bottom:10px;}
+section {padding:40px 20px;max-width:1100px;margin:auto;}
+h2{text-align:center;margin-bottom:25px;}
+.services, .reviews {
+display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;
+}
+.card {
+background:white;padding:20px;border-radius:8px;text-align:center;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+form {
+background:white;padding:25px;border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+input, textarea, button {
+width:100%;padding:12px;margin:10px 0;
+border-radius:5px;border:1px solid #ccc;
+}
+button {
+background:#0b5ed7;color:white;border:none;
+font-size:16px;cursor:pointer;
+}
+button:hover {background:#084298;}
+iframe {width:100%;height:300px;border-radius:8px;border:0;}
+.whatsapp, .call {
+position:fixed;right:20px;color:white;
+padding:14px 20px;border-radius:50px;
+text-decoration:none;font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+.whatsapp {bottom:20px;background:#25d366;}
+.call {bottom:80px;background:#0b5ed7;}
+footer {
+background:#222;color:white;text-align:center;
+padding:15px;font-size:14px;
+}
+</style>
+</head>
 
-The quickest way to create a new Starlight site is using `create astro` as shown in the [Getting Started guide](/getting-started/#create-a-new-project).
-If you want to add Starlight to an existing Astro project, this guide will explain how.
+<body>
 
-## Set up Starlight
+<header>
+<!-- LOGO PLACEHOLDER -->
+<img src="https://via.placeholder.com/150x70?text=AVH+TRAVELS" alt="AVH Travels Logo">
+<h1>AVH TRAVELS</h1>
+<p>Safe • Affordable • Comfortable Cab & Tour Services</p>
+</header>
 
-To follow this guide, you’ll need an existing Astro project.
+<section>
+<h2>Our Services</h2>
+<div class="services">
+<div class="card">🚕 Local Cab Services</div>
+<div class="card">🚖 Outstation Trips</div>
+<div class="card">🚌 Tour Packages</div>
+<div class="card">✈ Airport Pickup & Drop</div>
+<div class="card">🏨 Hotel & Travel Booking</div>
+<div class="card">🛣 Corporate & Rentals</div>
+</div>
+</section>
 
-### Add the Starlight integration
+<section>
+<h2>Online Cab Booking</h2>
+<form onsubmit="sendBooking();return false;">
+<input type="text" id="name" placeholder="Your Name" required>
+<input type="tel" id="phone" placeholder="Phone Number" required>
+<input type="text" id="pickup" placeholder="Pickup Location">
+<input type="text" id="drop" placeholder="Drop Location">
+<textarea id="details" placeholder="Date, Time, Vehicle Type"></textarea>
+<button type="submit">Book Now</button>
+</form>
+</section>
 
-Starlight is an [Astro integration](https://docs.astro.build/en/guides/integrations-guide/). Add it to your site by running the `astro add` command in your project’s root directory:
+<section>
+<h2>Customer Reviews</h2>
+<div class="reviews">
+<div class="card">⭐⭐⭐⭐⭐<br>Very good service & polite driver</div>
+<div class="card">⭐⭐⭐⭐⭐<br>On-time airport pickup</div>
+<div class="card">⭐⭐⭐⭐⭐<br>Best travels in the area</div>
+</div>
+</section>
 
-<Tabs syncKey="pkg">
-    <TabItem label="npm">
-        ```sh
-        npx astro add starlight
-        ```
+<section>
+<h2>Our Location</h2>
+<iframe 
+src="https://www.google.com/maps?q=India&output=embed">
+</iframe>
+</section>
 
-    </TabItem>
-    <TabItem label="pnpm">
-        ```sh
-        pnpm astro add starlight
-        ```
-    </TabItem>
-    <TabItem label="Yarn">
-        ```sh
-        yarn astro add starlight
-        ```
-    </TabItem>
+<a class="whatsapp" href="https://wa.me/917892116374" target="_blank">📲 WhatsApp</a>
+<a class="call" href="tel:7892116374">📞 Call Now</a>
 
-</Tabs>
+<footer>
+<p>© 2025 AVH TRAVELS | India | All Rights Reserved</p>
+</footer>
 
-This will install the required dependencies and add Starlight to the `integrations` array in your Astro config file.
+<script>
+function sendBooking(){
+var msg=
+"Hello AVH TRAVELS,%0A%0A"+
+"Name: "+name.value+"%0A"+
+"Phone: "+phone.value+"%0A"+
+"Pickup: "+pickup.value+"%0A"+
+"Drop: "+drop.value+"%0A"+
+"Details: "+details.value;
+window.open("https://wa.me/917892116374?text="+msg,"_blank");
+}
+</script>
 
-### Configure the integration
-
-The Starlight integration is configured in your `astro.config.mjs` file.
-
-Add a `title` to get started:
-
-```js ins={8}
-// astro.config.mjs
-import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
-
-export default defineConfig({
-	integrations: [
-		starlight({
-			title: 'My delightful docs site',
-		}),
-	],
-});
-```
-
-Find all available options in the [Starlight configuration reference](/reference/configuration/).
-
-### Configure content collections
-
-Starlight is built on top of Astro’s [content collections](https://docs.astro.build/en/guides/content-collections/), which are configured in the `src/content.config.ts` file.
-
-Create or update the content config file, adding a `docs` collection that uses Starlight’s [`docsLoader`](/reference/configuration/#docsloader) and [`docsSchema`](/reference/configuration/#docsschema):
-
-```js ins={3-4,7}
-// src/content.config.ts
-import { defineCollection } from 'astro:content';
-import { docsLoader } from '@astrojs/starlight/loaders';
-import { docsSchema } from '@astrojs/starlight/schema';
-
-export const collections = {
-	docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
-};
-```
-
-Starlight also supports the [`legacy.collections` flag](https://docs.astro.build/en/reference/legacy-flags/) where collections are handled using the legacy content collections implementation.
-This is useful if you have an existing Astro project and are unable to make any changes to collections at this time to use a loader.
-
-### Add content
-
-Starlight is now configured and it’s time to add some content!
-
-Create a `src/content/docs/` directory and start by adding an `index.md` file.
-This will be the homepage of your new site:
-
-```md
----
-# src/content/docs/index.md
-title: My docs
-description: Learn more about my project in this docs site built with Starlight.
----
-
-Welcome to my project!
-```
-
-Starlight uses file-based routing, which means every Markdown, MDX, or Markdoc file in `src/content/docs/` will turn into a page on your site. Frontmatter metadata (the `title` and `description` fields in the example above) can change how each page is displayed.
-See all the available options in the [frontmatter reference](/reference/frontmatter/).
-
-## Tips for existing sites
-
-If you have an existing Astro project, you can use Starlight to quickly add a documentation section to your site.
-
-### Use Starlight at a subpath
-
-To add all Starlight pages at a subpath, place all your docs content inside a subdirectory of `src/content/docs/`.
-
-For example, if Starlight pages should all start with `/guides/`, add your content in the `src/content/docs/guides/` directory:
-
-import { FileTree } from '@astrojs/starlight/components';
-
-<FileTree>
-
-- src/
-  - content/
-    - docs/
-      - **guides/**
-        - guide.md
-        - index.md
-  - pages/
-- astro.config.mjs
-
-</FileTree>
-
-In the future, we plan to support this use case better to avoid the need for the extra nested directory in `src/content/docs/`.
-
-### Use Starlight with SSR
-
-To enable SSR, follow the [“On-demand Rendering Adapters”](https://docs.astro.build/en/guides/on-demand-rendering/) guide in Astro’s docs to add a server adapter to your Starlight project.
-
-Documentation pages generated by Starlight are pre-rendered by default regardless of your project's output mode. To opt out of pre-rendering your Starlight pages, set the [`prerender` config option](/reference/configuration/#prerender) to `false`.
+</body>
+</html>
